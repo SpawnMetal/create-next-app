@@ -23,6 +23,8 @@ export default function Post({post: serverPost}: PostPageProps) {
         `${process.env.API_URL}/posts/${router.query.id}`
       )
       const data = await response.json()
+      console.log('data=', data)
+
       setPost(data)
     }
 
@@ -63,7 +65,8 @@ interface PostNextPageContext extends NextPageContext {
 
 // Данная функция вызывается исключительно только на серверной части. query = {id: номер}, взят из [id] страницы и её значения
 // Последовательность выполнения из логов, c - client, s - server:
-// 1s GET /posts/1 2c 5c
+// Переход на страницу с другой: 1s GET /posts/1 2c 5c
+// Вход на страницу (F5): 1s GET /posts/1 2sc 5sc
 export async function getServerSideProps({query}: PostNextPageContext) {
   console.log(1)
 
